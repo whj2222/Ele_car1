@@ -21,7 +21,9 @@
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
-
+volatile uint8_t rx_len = 0;  //接收一帧数据的长度
+volatile uint8_t recv_end_flag = 0; //一帧数据接收完成标志
+uint8_t rx_buffer[100]={0};  //接收数据缓存数组
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart1;
@@ -53,7 +55,17 @@ void MX_USART1_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART1_Init 2 */
+	
+  if (HAL_UART_Init(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+//下方为自己添加的代码
+	__HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE); //使能IDLE中断
 
+//DMA接收函数，此句一定要加，不加接收不到第一次传进来的实数据，是空的，且此时接收到的数据长度为缓存器的数据长度
+	HAL_UART_Receive_DMA(&huart1,rx_buffer,BUFFER_SIZE);
+	
   /* USER CODE END USART1_Init 2 */
 
 }

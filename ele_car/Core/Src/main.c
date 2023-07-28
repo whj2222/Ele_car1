@@ -24,7 +24,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "string.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,6 +55,40 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+/*
+*********************************************************************************************************
+* 函 数 名: DMA_Usart_Send
+* 功能说明: 串口发送功能函数
+* 形  参: buf，len
+* 返 回 值: 无
+*********************************************************************************************************
+*/
+void DMA_Usart_Send(uint8_t *buf,uint8_t len)//串口发送封装
+{
+ if(HAL_UART_Transmit_DMA(&huart1, buf,len)!= HAL_OK) //判断是否发送正常，如果出现异常则进入异常中断函数
+  {
+   Error_Handler();
+  }
+
+}
+
+
+
+/*
+*********************************************************************************************************
+* 函 数 名: DMA_Usart1_Read
+* 功能说明: 串口接收功能函数
+* 形  参: Data,len
+* 返 回 值: 无
+*********************************************************************************************************
+*/
+void DMA_Usart1_Read(uint8_t *Data,uint8_t len)//串口接收封装
+{
+	HAL_UART_Receive_DMA(&huart1,Data,len);//重新打开DMA接收
+}
+
+
 
 /* USER CODE END 0 */
 
@@ -99,10 +133,29 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
-		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
-		HAL_Delay(100);
+
 		
+		//DMA_Usart_Send((uint8_t *)Senbuff, sizeof(Senbuff));
+		if(recv_end_flag == 1)  //接收完成标志
+		{
+			if(strncmp(&rx_buffer[0], "3", 1) == 0)
+			{
+				HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
+				HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
+				HAL_Delay(100);
+			}
+			DMA_Usart_Send(rx_buffer, rx_len);
+			rx_len = 0;//清除计数
+			recv_end_flag = 0;//清除接收结束标志位
+//			for(uint8_t i=0;i<rx_len;i++)
+//			{
+//				rx_buffer[i]=0;//清接收缓存
+//			}
+			memset(rx_buffer,0,rx_len);
+		}
+
+		// DMA_Usart_Send((uint8_t *)Senbuff, sizeof(Senbuff));
+		HAL_UART_Receive_DMA(&huart1,rx_buffer,BUFFER_SIZE);//重新打开DMA接收
   }
   /* USER CODE END 3 */
 }

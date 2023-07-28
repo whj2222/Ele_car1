@@ -35,6 +35,15 @@ extern "C" {
 extern UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN Private defines */
+extern UART_HandleTypeDef huart1;
+extern DMA_HandleTypeDef hdma_usart1_rx;
+extern DMA_HandleTypeDef hdma_usart1_tx;
+
+
+#define BUFFER_SIZE  100  
+extern  volatile uint8_t rx_len ;  //接收一帧数据的长度
+extern volatile uint8_t recv_end_flag; //一帧数据接收完成标志
+extern uint8_t rx_buffer[100];  //接收数据缓存数组
 
 /* USER CODE END Private defines */
 
