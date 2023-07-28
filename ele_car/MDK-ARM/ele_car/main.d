@@ -26,10 +26,14 @@ ele_car\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h
 ele_car\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
 ele_car\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 ele_car\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
+ele_car\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h
+ele_car\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h
 ele_car\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 ele_car\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 ele_car\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 ele_car\main.o: ../Core/Inc/dma.h
+ele_car\main.o: ../Core/Inc/i2c.h
 ele_car\main.o: ../Core/Inc/usart.h
 ele_car\main.o: ../Core/Inc/gpio.h
 ele_car\main.o: D:\KEIL_MDK\Core\ARM\ARMCC\Bin\..\include\string.h
+ele_car\main.o: ..\HARDWARE\oled.h

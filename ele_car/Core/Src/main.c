@@ -19,12 +19,14 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "dma.h"
+#include "i2c.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "string.h"
+#include "oled.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -122,7 +124,10 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_USART1_UART_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
+	OLED_Init();
+	OLED_Clear();
 
   /* USER CODE END 2 */
 
@@ -131,7 +136,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+		
     /* USER CODE BEGIN 3 */
 
 		
@@ -140,6 +145,9 @@ int main(void)
 		{
 			if(strncmp(&rx_buffer[0], "3", 1) == 0)
 			{
+				OLED_MyDisplay("OpenMv", "3");
+//				OLED_ShowString(0, 0, "OpenMv:", 8);
+//				OLED_ShowString(60,0,"3",8);
 				HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
 				HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
 				HAL_Delay(100);
